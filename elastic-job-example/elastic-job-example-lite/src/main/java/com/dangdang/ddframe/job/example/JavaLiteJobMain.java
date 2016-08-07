@@ -39,7 +39,7 @@ import java.nio.file.attribute.PosixFilePermissions;
 
 public final class JavaLiteJobMain {
     
-    private final ZookeeperConfiguration zkConfig = new ZookeeperConfiguration("10.199.200.53:2181", "myjob");
+    private final ZookeeperConfiguration zkConfig = new ZookeeperConfiguration("192.168.245.128:2181", "myjob");
     
     private final CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(zkConfig);
     
@@ -54,25 +54,25 @@ public final class JavaLiteJobMain {
         zkConfig.setNestedDataDir(String.format("target/test_zk_data/%s/", System.nanoTime()));
         regCenter.init();
         
-        final SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(
-                JobCoreConfiguration.newBuilder("javaSimpleJob", "0/30 * * * * ?", 10).build(), JavaSimpleJob.class.getCanonicalName());
+//        final SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(
+//                JobCoreConfiguration.newBuilder("javaSimpleJob", "0/30 * * * * ?", 10).build(), JavaSimpleJob.class.getCanonicalName());
         
         final DataflowJobConfiguration throughputJobConfig = new DataflowJobConfiguration(
                 JobCoreConfiguration.newBuilder("javaThroughputDataflowElasticJob", "0/5 * * * * ?", 10).shardingItemParameters("0=A,1=B,2=C,3=D,4=E,5=F,6=G,7=H,8=I,9=J").build(), 
                 JavaDataflowJob.class.getCanonicalName(), DataflowJobConfiguration.DataflowType.THROUGHPUT, true);
         
-//        final DataflowJobConfiguration sequenceJobConfig = new DataflowJobConfiguration(
-//                JobCoreConfiguration.newBuilder("javaSequenceDataflowElasticJob", "0/5 * * * * ?", 10).shardingItemParameters("0=A,1=B,2=C,3=D,4=E,5=F,6=G,7=H,8=I,9=J").build(), 
-//                JavaDataflowJob.class.getCanonicalName(), DataflowJobConfiguration.DataflowType.SEQUENCE, true);
+        final DataflowJobConfiguration sequenceJobConfig = new DataflowJobConfiguration(
+                JobCoreConfiguration.newBuilder("javaSequenceDataflowElasticJob", "0/5 * * * * ?", 10).shardingItemParameters("0=A,1=B,2=C,3=D,4=E,5=F,6=G,7=H,8=I,9=J").build(), 
+                JavaDataflowJob.class.getCanonicalName(), DataflowJobConfiguration.DataflowType.SEQUENCE, true);
         
-//        final ScriptJobConfiguration scriptJobConfig = new ScriptJobConfiguration(JobCoreConfiguration.newBuilder("scriptElasticJob", "0/5 * * * * ?", 10).build(), 
-//                buildScriptCommandLine());
+        final ScriptJobConfiguration scriptJobConfig = new ScriptJobConfiguration(JobCoreConfiguration.newBuilder("scriptElasticJob", "0/5 * * * * ?", 10).build(), 
+                buildScriptCommandLine());
                 
 //        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(simpleJobConfig).build(), new SimpleListener(), new SimpleDistributeListener(1000L, 2000L)).init();
-//        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(throughputJobConfig).build()).init();
+        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(throughputJobConfig).build()).init();
 //        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(sequenceJobConfig).build()).init();
 //        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(scriptJobConfig).build()).init();
-        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(simpleJobConfig).build()).init();
+//        new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(simpleJobConfig).build()).init();
     }
     
     private static String buildScriptCommandLine() {
