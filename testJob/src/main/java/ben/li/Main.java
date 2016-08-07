@@ -30,7 +30,6 @@ public class Main {
 		// 定义SIMPLE类型
 		SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(
 				simpleCoreConfig, MyElasticJob.class.getCanonicalName());
-		
 		new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(
 				simpleJobConfig).build()).init();
 	}
