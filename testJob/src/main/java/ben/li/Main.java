@@ -19,9 +19,9 @@ public class Main {
 	}
 
 	private void init() {
-		// zkConfig.setNestedPort(4181);
-		// zkConfig.setNestedDataDir(String.format("target/test_zk_data/%s/",
-		// System.nanoTime()));
+		zkConfig.setNestedPort(4181);
+		zkConfig.setNestedDataDir(String.format("target/test_zk_data/%s/",
+		System.nanoTime()));
 		regCenter.init();
 		JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("MyElasticJob", "0/3 * * * * ?", 10)
 				.build();

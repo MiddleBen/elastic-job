@@ -7,7 +7,7 @@ import com.dangdang.ddframe.job.api.type.simple.api.SimpleJob;
 
 public class MyElasticJob implements SimpleJob {
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	SimpleDateFormat sdf = new SimpleDateFormat();
 	
 	public void execute(ShardingContext shardingContext) {
 		System.out.println(sdf.format(new Date()) + " - shardingContext = "

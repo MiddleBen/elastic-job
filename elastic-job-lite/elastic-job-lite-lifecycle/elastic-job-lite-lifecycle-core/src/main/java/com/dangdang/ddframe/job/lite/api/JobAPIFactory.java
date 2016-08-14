@@ -25,7 +25,7 @@ import com.dangdang.ddframe.job.lite.internal.statistics.ServerStatisticsAPIImpl
 import com.google.common.base.Optional;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
+	
 /**
  * 作业API工厂.
  *
