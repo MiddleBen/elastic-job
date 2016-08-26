@@ -23,14 +23,14 @@ public class Main {
 		zkConfig.setNestedDataDir(String.format("target/test_zk_data/%s/",
 		System.nanoTime()));
 		regCenter.init();
-		JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("MyElasticJob", "0/3 * * * * ?", 10)
+		JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("MyElasticJob", "0/3 * * * * ?", 10).failover(true)
 				.build();
 		// 定义SIMPLE类型
 		long startTimeoutMills = 1000L;
 		long completeTimeoutMills = 10000L;
 		SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig,
 				MyElasticJob.class.getCanonicalName());
-		new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(simpleJobConfig).build(),
+		new JobScheduler(regCenter, LiteJobConfiguration.newBuilder(simpleJobConfig).monitorExecution(true).overwrite(true).build(),
 				new TestDistributeOnceElasticJobListener(startTimeoutMills, completeTimeoutMills)).init();
 	}
 
