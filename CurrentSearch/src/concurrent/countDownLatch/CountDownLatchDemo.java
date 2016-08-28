@@ -13,6 +13,18 @@ public class CountDownLatchDemo {
 		Worker worker2 = new Worker("li si", latch);
 		worker1.start();//
 		worker2.start();//
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					latch.await();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}// 等待所有工人完成工作
+			}
+		}).start();
 		latch.await();// 等待所有工人完成工作
 		System.out.println("all work done at " + sdf.format(new Date()));
 	}
