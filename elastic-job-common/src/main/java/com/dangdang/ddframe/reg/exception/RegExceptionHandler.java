@@ -42,7 +42,7 @@ public final class RegExceptionHandler {
         if (isIgnoredException(cause) || isIgnoredException(cause.getCause())) {
             log.debug("Elastic job: ignored exception for: {}", cause.getMessage());
         } else if (cause instanceof InterruptedException) {
-            Thread.currentThread().interrupt();
+            Thread.currentThread().interrupt();// 抛出InterruptedException异常后，中断标示位会自动清除,所以一般都会这样重设中断位。 --li
         } else {
             throw new RegException(cause);
         }
